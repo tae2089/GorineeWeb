@@ -16,46 +16,31 @@ type gorineeWeb struct {
 	settings *Settings
 }
 
-func (g gorineeWeb) Get(path string, handlers fasthttp.RequestHandler) *Router {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (g gorineeWeb) Post() {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (g gorineeWeb) New() GorineeWeb {
-	//TODO implement me
-	panic("implement me")
-}
-
-type Router struct {
-}
-
 type GorineeWeb interface {
-	Get(path string, handlers fasthttp.RequestHandler) *Router
+	Get(path string, handlers fasthttp.RequestHandler) *router.Router
 	Post()
 	New() GorineeWeb
+	Run(addr string)
 }
 
-func New(settings ...*Settings) GorineeWeb {
-	gorin := new(gorineeWeb)
-
-	if len(settings) > 0 {
-		gorin.settings = settings[0]
-	} else {
-		gorin.settings = &Settings{}
+func (g *gorineeWeb) New() GorineeWeb {
+	return &gorineeWeb{
+		httpServer: &fasthttp.Server{},
+		router:     router.New(),
+		settings:   &Settings{},
 	}
-
-	//if gorin.settings.ServerName <= 0 {
-	//	gorin.settings.ServerName =
-	//}
-	return gorin
 }
 
-func DefaultRouter() *router.Router {
-	r := router.New()
-	return r
+func (g *gorineeWeb) Run(addr string) {
+	g.httpServer.Handler = g.router.Handler
+	g.httpServer.ListenAndServe(addr)
+}
+func (g *gorineeWeb) Get(path string, handlers fasthttp.RequestHandler) *router.Router {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (g *gorineeWeb) Post() {
+	//TODO implement me
+	panic("implement me")
 }
