@@ -14,6 +14,10 @@ const (
 	Trace          = "TRACE"   // RFC 7231, 4.3.8
 )
 
+func (m METHOD) convert() string {
+	return string(m)
+}
+
 type STATUS int
 
 const (
@@ -102,4 +106,6 @@ type Settings struct {
 	// Max request url length
 	MaxRequestURLLength int // default 2048
 
+	// Enable case sensitive routing
+	CaseInSensitive bool
 }
