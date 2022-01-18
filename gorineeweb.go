@@ -2,7 +2,9 @@ package main
 
 import (
 	"github.com/fasthttp/router"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/valyala/fasthttp"
+	"github.com/valyala/fasthttp/fasthttpadaptor"
 	"log"
 )
 
@@ -44,6 +46,7 @@ type GorineeWeb interface {
 	Head(path string, handler Handler)
 	New() GorineeWeb
 	Run(addr string)
+	HealthCheck()
 	handle(method METHOD, path string, handler Handler)
 }
 
@@ -60,6 +63,11 @@ func (g *gorineeWeb) Run(addr string) {
 	g.httpServer.Handler = g.router.Handler
 	log.Printf(banner2, Version, addr)
 	g.httpServer.ListenAndServe(addr)
+}
+
+func (g *gorineeWeb) HealthCheck() {
+	fasthandler := fasthttpadaptor.NewFastHTTPHandler(promhttp.Handler())
+	g.router.Handle(Get.convert(), "metrics", fasthandler)
 }
 
 func (g *gorineeWeb) handle(method METHOD, path string, handler Handler) {
@@ -102,4 +110,8 @@ func (g *gorineeWeb) Delete(path string, handler Handler) {
 func (g *gorineeWeb) Head(path string, handler Handler) {
 	//TODO implement me
 	g.handle(Head, path, handler)
+}
+
+func registerMiddleware(handler Handler) {
+
 }
