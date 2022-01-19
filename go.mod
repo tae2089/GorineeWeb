@@ -1,4 +1,5 @@
-module gorineeWeb
+module  github.com/tae2089/gorineeWeb
+
 
 go 1.17
 
