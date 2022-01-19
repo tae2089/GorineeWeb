@@ -61,8 +61,14 @@ func (g *gorineeWeb) New() GorineeWeb {
 			ReadTimeout:        time.Duration(10 * 1000),
 			WriteTimeout:       time.Duration(10 * 1000),
 		},
-		router:   router.New(),
-		settings: &Settings{},
+		router: router.New(),
+	}
+}
+
+func (g *gorineeWeb) Custom(server *fasthttp.Server) GorineeWeb {
+	return &gorineeWeb{
+		httpServer: server,
+		router:     router.New(),
 	}
 }
 
