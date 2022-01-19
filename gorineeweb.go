@@ -66,6 +66,7 @@ func New() *gorineeWeb {
 	}
 }
 
+//custom
 func Custom(server *fasthttp.Server) *gorineeWeb {
 	return &gorineeWeb{
 		httpServer: server,
