@@ -53,7 +53,7 @@ type GorineeWeb interface {
 	//WebSocket(path string, handler Handler)
 }
 
-func (g *gorineeWeb) New() *gorineeWeb {
+func New() *gorineeWeb {
 	return &gorineeWeb{
 		httpServer: &fasthttp.Server{
 			Logger:             &customLogger{},
@@ -66,7 +66,7 @@ func (g *gorineeWeb) New() *gorineeWeb {
 	}
 }
 
-func (g *gorineeWeb) Custom(server *fasthttp.Server) *gorineeWeb {
+func Custom(server *fasthttp.Server) *gorineeWeb {
 	return &gorineeWeb{
 		httpServer: server,
 		router:     router.New(),
