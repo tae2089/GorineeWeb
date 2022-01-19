@@ -10,8 +10,9 @@ func getTest(gcx *gorineeWebContext) {
 }
 
 func getId(gcx *gorineeWebContext) {
-	fmt.Println("123")
-	gcx.ReplyJSON("123")
+	//param, query, path
+	id := InterfaceConvertString(gcx.Param("id"))
+	gcx.ReplyJSON(id)
 }
 
 func main() {
