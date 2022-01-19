@@ -1,4 +1,4 @@
-package gorineeWeb
+package GorineeWeb
 
 import (
 	"encoding/json"

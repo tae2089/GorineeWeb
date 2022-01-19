@@ -1,4 +1,4 @@
-package gorineeWeb
+package GorineeWeb
 
 type METHOD string
 

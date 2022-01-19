@@ -1,4 +1,4 @@
-package gorineeWeb
+package GorineeWeb
 
 type node struct {
 	//메소드 관련 맵
