@@ -53,6 +53,7 @@ type GorineeWeb interface {
 	//WebSocket(path string, handler Handler)
 }
 
+//New
 func New() *gorineeWeb {
 	return &gorineeWeb{
 		httpServer: &fasthttp.Server{
