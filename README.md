@@ -22,5 +22,6 @@
 - 서버 실행 시, GorineeWeb과 버전 출력 뛰어주기 완료
 - 메소드와 연결되는 핸들러 만들기 완료
 - Get Mapping 완료
+- query and param 구현 완료
 - middleware 구성 진행중
 - 라우터 그룹핑 필요 
