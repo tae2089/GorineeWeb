@@ -45,14 +45,15 @@ type GorineeWeb interface {
 	Put(path string, handler Handler)
 	Delete(path string, handler Handler)
 	Head(path string, handler Handler)
-	New() GorineeWeb
+	New() *gorineeWeb
+	Custom(server *fasthttp.Server) *gorineeWeb
 	Run(addr string)
 	HealthCheck()
 	handle(method METHOD, path string, handler Handler)
 	//WebSocket(path string, handler Handler)
 }
 
-func (g *gorineeWeb) New() GorineeWeb {
+func (g *gorineeWeb) New() *gorineeWeb {
 	return &gorineeWeb{
 		httpServer: &fasthttp.Server{
 			Logger:             &customLogger{},
@@ -65,7 +66,7 @@ func (g *gorineeWeb) New() GorineeWeb {
 	}
 }
 
-func (g *gorineeWeb) Custom(server *fasthttp.Server) GorineeWeb {
+func (g *gorineeWeb) Custom(server *fasthttp.Server) *gorineeWeb {
 	return &gorineeWeb{
 		httpServer: server,
 		router:     router.New(),
