@@ -6,6 +6,7 @@ import (
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/fasthttpadaptor"
 	"log"
+	"time"
 )
 
 // Exported constants
@@ -53,9 +54,21 @@ type GorineeWeb interface {
 
 func (g *gorineeWeb) New() GorineeWeb {
 	return &gorineeWeb{
-		httpServer: &fasthttp.Server{Logger: &customLogger{}},
+		httpServer: &fasthttp.Server{
+			Logger:             &customLogger{},
+			Concurrency:        1000,
+			MaxRequestBodySize: 2 << 20,
+			ReadTimeout:        time.Duration(10 * 1000),
+			WriteTimeout:       time.Duration(10 * 1000),
+		},
+		router: router.New(),
+	}
+}
+
+func (g *gorineeWeb) Custom(server *fasthttp.Server) GorineeWeb {
+	return &gorineeWeb{
+		httpServer: server,
 		router:     router.New(),
-		settings:   &Settings{},
 	}
 }
 
