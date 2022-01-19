@@ -12,6 +12,8 @@ func getTest(gcx *gorineeWebContext) {
 func getId(gcx *gorineeWebContext) {
 	//param, query, path
 	id := InterfaceConvertString(gcx.Param("id"))
+	query := gcx.Query("test")
+	fmt.Println(query)
 	gcx.ReplyJSON(id)
 }
 
@@ -20,6 +22,7 @@ func main() {
 	r := g.New()
 	r.Get("/test", getTest)
 	r.Get("/{id}", getId)
+
 	r.Run(":3000")
 	//t := Get
 	fmt.Println(int(Continue))
