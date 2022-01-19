@@ -1,4 +1,4 @@
-package gorineeweb
+package gorineeWeb
 
 import (
 	"strconv"
