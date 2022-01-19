@@ -1,4 +1,4 @@
-package main
+package gorineeweb
 
 import (
 	"github.com/fasthttp/router"

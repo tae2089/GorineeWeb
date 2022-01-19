@@ -2,7 +2,9 @@
 1. 나만의 웹프레임쿼으 만들기 프로젝트입니다.
 
 ## 사용 라이브러리
-- fasthttp
+- github.com/valyala/fasthttp
+- github.com/fasthttp/router
+- github.com/prometheus/client_golang/prometheus/promhttp
 
 ## 해야할 것
 1. 라우터 생성하기
