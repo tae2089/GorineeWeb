@@ -18,26 +18,13 @@ type gorineeWebContext struct {
 }
 
 type GorineeWebContext interface {
-	SetCookie(key, value string, expires time.Duration, httpOnly, secure bool) bool
+	SetCookie(key, value string, expireAt time.Time, httpOnly, secure bool) bool
 	GetCookie(key string) string
-	Reply(contentType string, data []byte)
-}
-
-type Context interface {
-	Next()
-	Context() *fasthttp.RequestCtx
-	Param(key string) string
-	Query(key string) string
-	SendBytes(value []byte) Context
-	SendString(value string) Context
-	SendJSON(in interface{}) error
-	Status(status int) Context
-	Set(key string, value string)
-	Get(key string) string
-	SetLocal(key string, value interface{})
-	GetLocal(key string) interface{}
 	Body() string
-	ParseBody(out interface{}) error
+	Query(key string) string
+	Param(key string) interface{}
+	Reply(contentType string, data []byte)
+	ReplyJSON(data interface{})
 }
 
 // handlersChain defines a handlerFunc array.
@@ -75,4 +62,19 @@ func (g *gorineeWebContext) ReplyJSON(data interface{}) {
 	}
 }
 
-//func (g *gorineeWebContext) Reply
+func (g *gorineeWebContext) Status(status STATUS) GorineeWebContext {
+	g.ctx.Response.SetStatusCode(status.convert())
+	return g
+}
+
+func (g *gorineeWebContext) Param(key string) interface{} {
+	return g.ctx.UserValue(key)
+}
+
+func (g *gorineeWebContext) Query(key string) string {
+	return GetString(g.ctx.QueryArgs().Peek(key))
+}
+
+func (g *gorineeWebContext) Body() string {
+	return GetString(g.ctx.Request.Body())
+}
