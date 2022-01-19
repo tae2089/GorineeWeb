@@ -20,6 +20,10 @@ func (m METHOD) convert() string {
 
 type STATUS int
 
+func (s STATUS) convert() int {
+	return int(s)
+}
+
 const (
 	Continue           STATUS = 100 // RFC 7231, 6.2.1
 	SwitchingProtocols        = 101 // RFC 7231, 6.2.2

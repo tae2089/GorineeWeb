@@ -48,6 +48,7 @@ type GorineeWeb interface {
 	Run(addr string)
 	HealthCheck()
 	handle(method METHOD, path string, handler Handler)
+	//WebSocket(path string, handler Handler)
 }
 
 func (g *gorineeWeb) New() GorineeWeb {
@@ -76,6 +77,13 @@ func (g *gorineeWeb) handle(method METHOD, path string, handler Handler) {
 		handler(gorineeWebContext)
 	})
 }
+
+//func (g *gorineeWeb) WebSocket(path string, handler Handler) {
+//	g.router.Handle(method.convert(), path, func(ctx *fasthttp.RequestCtx) {
+//		gorineeWebContext := &gorineeWebContext{ctx: ctx}
+//		handler(gorineeWebContext)
+//	})
+//}
 
 //func (g *gorineeWeb) registeredRoute(method METHOD, path string, handler Handler) *Route {
 //	route := &Route{
