@@ -13,11 +13,11 @@ import (
 // handlersChain defines a handlerFunc array.
 //type handlersChain []handlerFunc
 // Context interface
-type gorineeWebContext struct {
+type GorineeWebContext struct {
 	ctx *fasthttp.RequestCtx
 }
 
-type GorineeWebContext interface {
+type gorineeWebContext interface {
 	SetCookie(key, value string, expireAt time.Time, httpOnly, secure bool) bool
 	GetCookie(key string) string
 	Body() string
@@ -30,7 +30,7 @@ type GorineeWebContext interface {
 // handlersChain defines a handlerFunc array.
 type handlersChain []fasthttp.RequestHandler
 
-func (g *gorineeWebContext) SetCookie(key, value string, expireAt time.Time, httpOnly, secure bool) bool {
+func (g *GorineeWebContext) SetCookie(key, value string, expireAt time.Time, httpOnly, secure bool) bool {
 	ck := fasthttp.AcquireCookie()
 	ck.SetKey(key)
 	ck.SetValue(value)
@@ -41,18 +41,18 @@ func (g *gorineeWebContext) SetCookie(key, value string, expireAt time.Time, htt
 	return success
 }
 
-func (g *gorineeWebContext) GetCookie(key string) string {
+func (g *GorineeWebContext) GetCookie(key string) string {
 	return string(g.ctx.Request.Header.Cookie(key))
 }
 
-func (g *gorineeWebContext) Reply(contentType string, data []byte) {
+func (g *GorineeWebContext) Reply(contentType string, data []byte) {
 	g.ctx.SetContentType(contentType)
 	g.ctx.SetStatusCode(fasthttp.StatusOK)
 	g.ctx.Response.Header.Set("Content-Length", strconv.FormatInt(int64(len(data)), 10))
 	g.ctx.Response.SetBody(data)
 }
 
-func (g *gorineeWebContext) ReplyJSON(data interface{}) {
+func (g *GorineeWebContext) ReplyJSON(data interface{}) {
 	g.ctx.SetContentType("application/json")
 	g.ctx.SetStatusCode(fasthttp.StatusOK)
 	encoder := json.NewEncoder(g.ctx.Response.BodyWriter())
@@ -62,19 +62,18 @@ func (g *gorineeWebContext) ReplyJSON(data interface{}) {
 	}
 }
 
-func (g *gorineeWebContext) Status(status STATUS) GorineeWebContext {
+func (g *GorineeWebContext) Status(status STATUS) {
 	g.ctx.Response.SetStatusCode(status.convert())
-	return g
 }
 
-func (g *gorineeWebContext) Param(key string) interface{} {
+func (g *GorineeWebContext) Param(key string) interface{} {
 	return g.ctx.UserValue(key)
 }
 
-func (g *gorineeWebContext) Query(key string) string {
+func (g *GorineeWebContext) Query(key string) string {
 	return GetString(g.ctx.QueryArgs().Peek(key))
 }
 
-func (g *gorineeWebContext) Body() string {
+func (g *GorineeWebContext) Body() string {
 	return GetString(g.ctx.Request.Body())
 }
