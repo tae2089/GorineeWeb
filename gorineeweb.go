@@ -89,7 +89,7 @@ func (g *gorineeWeb) HealthCheck() {
 
 func (g *gorineeWeb) handle(method METHOD, path string, handler Handler) {
 	g.router.Handle(method.convert(), path, func(ctx *fasthttp.RequestCtx) {
-		gorineeWebContext := &gorineeWebContext{ctx: ctx}
+		gorineeWebContext := &GorineeWebContext{ctx: ctx}
 		handler(gorineeWebContext)
 	})
 }

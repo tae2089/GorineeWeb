@@ -17,7 +17,7 @@ type matchResult struct {
 	params   map[string]string
 }
 
-type Handler func(*gorineeWebContext)
+type Handler func(*GorineeWebContext)
 
 //func (r *router) HandleFunc(method, pattern string, h fasthttp.RequestHandler) {
 //	// http 메서드로 등록된 맵이 있는지 확인
